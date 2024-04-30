@@ -1,3 +1,5 @@
+import random
+
 def f(mapa): #Funcao para formatar o mata final, com cores
     import copy
     lista = copy.deepcopy(mapa)
@@ -42,8 +44,6 @@ def colocando_noMapa(mapa, b, l, c, o):
             mapa[l][i] = 'N'
     return mapa
 
-import random
-
 def aloca_navios(mapa, lista):
     tam = len(mapa)
     l = random.randint(0, tam-1)
@@ -60,6 +60,18 @@ def aloca_navios(mapa, lista):
         mapa_final_comp = mapa_alocado
     return mapa_final_comp
           
+def aloca_naviosUser(mapa, b, l, c, o):
+    import random
+    tam = len(mapa)
+    if posicao_suporta(mapa, b, l, c, o) == True:
+        if o == 'h':
+            for i in range (c, c+b):
+                mapa[l][i] = 'N'
+        if o == 'v':
+            for i in range (l, l+b):
+                mapa[i][c] = 'N'
+    return mapa
+
 def cria_mapa(N): 
     linha = [' ']*N
     matriz=[linha]*N
