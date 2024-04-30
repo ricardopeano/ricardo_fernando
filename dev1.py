@@ -84,3 +84,64 @@ def foi_derrotado(mapa):
                 return False
     return True
 
+# quantidade de blocos por modelo de navio
+CONFIGURACAO = {
+    'destroyer': 3,
+    'porta-avioes': 5,
+    'submarino': 2,
+    'torpedeiro': 3,
+    'cruzador': 2,
+    'couracado': 4
+}
+
+# frotas de cada pais
+PAISES =  {
+    'Brasil': {'cruzador': 1, 'torpedeiro': 2, 'destroyer': 1, 'couracado': 1, 'porta-avioes': 1}, 
+    'França': {'cruzador': 3, 'porta-avioes': 1, 'destroyer': 1, 'submarino': 1, 'couracado': 1},
+    'Austrália': {'couracado': 1, 'cruzador': 3, 'submarino': 1, 'porta-avioes': 1, 'torpedeiro': 1},
+    'Rússia': {'cruzador': 1, 'porta-avioes': 1, 'couracado': 2, 'destroyer': 1, 'submarino': 1},
+    'Japão': {'torpedeiro': 2, 'cruzador': 1, 'destroyer': 2, 'couracado': 1, 'submarino': 1}
+}
+
+# alfabeto para montar o nome das colunas
+ALFABETO = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
+# cores para o terminal
+CORES = {
+    'reset': '\u001b[0m',
+    'red': '\u001b[31m',
+    'black': '\u001b[30m',
+    'green': '\u001b[32m',
+    'yellow': '\u001b[33m',
+    'blue': '\u001b[34m',
+    'magenta': '\u001b[35m',
+    'cyan': '\u001b[36m',
+    'white': '\u001b[37m'
+}
+
+# Escolhe o pais do computador
+lista_paises = ['Brasil', 'França', 'Austrália', 'Rússia', 'Japão']
+pais_computador = random.choice(lista_paises)
+
+# Prints iniciais
+print('Iniciando o Jogo!')
+print(f'Computador está alocando os navios de guerra do país {pais_computador}...')
+print('Computador já está em posição de batalha!')
+print()
+
+# Formatacao lista de paises no terminal
+i = 1
+for pais, navios in PAISES.items():
+    print(f"{i}: {pais}:")
+    for navio, qtd in navios.items():
+        print(f"   {qtd} {navio}")
+    print()
+    i += 1
+
+# Escolha pais usuario
+numero_pais = int(input("Qual o número da nação da sua frota? "))
+dic_escolhaPais = {1:'Brasil', 2:'França', 3:'Austrália', 4:'Rússia', 5:'Japão'}
+pais_usuario = dic_escolhaPais[numero_pais]
+
+print(f'Você escolheu a nação {pais_usuario}')
+print('Agora é a sua vez de alocar seus navios de guerra!')
