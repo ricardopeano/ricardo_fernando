@@ -1,2 +1,4 @@
 # ricardo_fernando
-O nmeu primeiro repositorio
+EP2 Dessoft
+Ricardo Peano
+Fernando Vita
