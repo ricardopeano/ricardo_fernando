@@ -84,6 +84,8 @@ def foi_derrotado(mapa):
                 return False
     return True
 
+letras_validas = 'abcdefghijABCDEFGHIJ'
+
 # quantidade de blocos por modelo de navio
 CONFIGURACAO = {
     'destroyer': 3,
@@ -145,3 +147,27 @@ pais_usuario = dic_escolhaPais[numero_pais]
 
 print(f'Você escolheu a nação {pais_usuario}')
 print('Agora é a sua vez de alocar seus navios de guerra!')
+
+if pais_usuario == 'Brasil':
+    lista_navios = ['cruzador', 'torpedeiro', 'torpedeiro', 'destroyer', 'couracado', 'porta-avioes']  
+if pais_usuario == 'França':  
+    lista_navios = ['cruzador', 'cruzador', 'cruzador', 'porta-avioes', 'destroyer', 'submarino', 'couracado']
+if pais_usuario == 'Austrália':  
+    lista_navios = ['couracado', 'cruzador', 'cruzador', 'cruzador', 'submarino', 'porta-avioes', 'torpedeiro'] 
+if pais_usuario == 'Rússia': 
+    lista_navios = ['cruzador', 'porta-avioes', 'couracado', 'couracado', 'destroyer', 'submarino'] 
+if pais_usuario == 'Japão': 
+    lista_navios = ['torpedeiro', 'torpedeiro', 'cruzador', 'destroyer', 'destroyer', 'couracado', 'submarino'] 
+
+navio_pendente = lista_navios[0]
+
+for i in range (len(lista_navios)):
+    navio_pendente = lista_navios[i]
+    print(f'Alocar: {navio_pendente} ({CONFIGURACAO[navio_pendente]} blocos)')
+    print(f'Próximos: {lista_navios[i+1:-1]}')
+    print()
+    letra = input('Informe a Letra: ')
+    if letra not in letras_validas:
+        print('Letra inválida')
+        letra = input('Informe a Letra: ')
+   
