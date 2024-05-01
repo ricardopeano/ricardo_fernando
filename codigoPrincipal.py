@@ -14,8 +14,8 @@ def f(mapa): #Funcao para formatar o mata final, com cores
             if letra == ' ':
                 lista[l][c] = (u"\u001b[30m   \u001b[0m")
     print('   A   B   C   D   E   F   G   H   I   J')
-    for i in range (1,11):
-        print(i, lista[i][0], lista[i][1], lista[i][2], lista[i][3], lista[i][4], lista[i][5], lista[i][6], lista[i][7], lista[i][8], lista[i][9], i)
+    for i in range (10):
+        print(i+1, lista[i][0], lista[i][1], lista[i][2], lista[i][3], lista[i][4], lista[i][5], lista[i][6], lista[i][7], lista[i][8], lista[i][9], i+1)
     print('   A   B   C   D   E   F   G   H   I   J')
     return ''
 
@@ -59,7 +59,7 @@ def aloca_navios(mapa, lista):
         mapa_alocado = colocando_noMapa(mapa, b, l, c, o)
         mapa_final_comp = mapa_alocado
     return mapa_final_comp
-          
+
 def aloca_naviosUser(mapa, b, l, c, o):
     import random
     tam = len(mapa)
@@ -72,7 +72,7 @@ def aloca_naviosUser(mapa, b, l, c, o):
                 mapa[i][c] = 'N'
     return mapa
 
-def cria_mapa(N): 
+def cria_mapa(N):
     linha = [' ']*N
     matriz=[linha]*N
     return matriz
@@ -98,7 +98,7 @@ CONFIGURACAO = {
 
 # frotas de cada pais
 PAISES =  {
-    'Brasil': {'cruzador': 1, 'torpedeiro': 2, 'destroyer': 1, 'couracado': 1, 'porta-avioes': 1}, 
+    'Brasil': {'cruzador': 1, 'torpedeiro': 2, 'destroyer': 1, 'couracado': 1, 'porta-avioes': 1},
     'França': {'cruzador': 3, 'porta-avioes': 1, 'destroyer': 1, 'submarino': 1, 'couracado': 1},
     'Austrália': {'couracado': 1, 'cruzador': 3, 'submarino': 1, 'porta-avioes': 1, 'torpedeiro': 1},
     'Rússia': {'cruzador': 1, 'porta-avioes': 1, 'couracado': 2, 'destroyer': 1, 'submarino': 1},
@@ -140,34 +140,66 @@ for pais, navios in PAISES.items():
     print()
     i += 1
 
-# Escolha pais usuario
+# Escolha pais usuario:
 numero_pais = int(input("Qual o número da nação da sua frota? "))
+print()
 dic_escolhaPais = {1:'Brasil', 2:'França', 3:'Austrália', 4:'Rússia', 5:'Japão'}
 pais_usuario = dic_escolhaPais[numero_pais]
+# Se a escolha do usuario for igual a do computador:
+while pais_usuario == pais_computador:
+    print("Você escolheu o mesmo país que o computador. Por favor, escolha outro.")
+    print()
+    numero_pais = int(input("Qual o número da nação da sua frota? "))
+    print()
+    dic_escolhaPais = {1:'Brasil', 2:'França', 3:'Austrália', 4:'Rússia', 5:'Japão'}
+    pais_usuario = dic_escolhaPais[numero_pais]
+    if pais_usuario != pais_computador:
+      break
+
 
 print(f'Você escolheu a nação {pais_usuario}')
 print('Agora é a sua vez de alocar seus navios de guerra!')
+print()
 
 if pais_usuario == 'Brasil':
-    lista_navios = ['cruzador', 'torpedeiro', 'torpedeiro', 'destroyer', 'couracado', 'porta-avioes']  
-if pais_usuario == 'França':  
+    lista_navios = ['cruzador', 'torpedeiro', 'torpedeiro', 'destroyer', 'couracado', 'porta-avioes']
+if pais_usuario == 'França':
     lista_navios = ['cruzador', 'cruzador', 'cruzador', 'porta-avioes', 'destroyer', 'submarino', 'couracado']
-if pais_usuario == 'Austrália':  
-    lista_navios = ['couracado', 'cruzador', 'cruzador', 'cruzador', 'submarino', 'porta-avioes', 'torpedeiro'] 
-if pais_usuario == 'Rússia': 
-    lista_navios = ['cruzador', 'porta-avioes', 'couracado', 'couracado', 'destroyer', 'submarino'] 
-if pais_usuario == 'Japão': 
-    lista_navios = ['torpedeiro', 'torpedeiro', 'cruzador', 'destroyer', 'destroyer', 'couracado', 'submarino'] 
+if pais_usuario == 'Austrália':
+    lista_navios = ['couracado', 'cruzador', 'cruzador', 'cruzador', 'submarino', 'porta-avioes', 'torpedeiro']
+if pais_usuario == 'Rússia':
+    lista_navios = ['cruzador', 'porta-avioes', 'couracado', 'couracado', 'destroyer', 'submarino']
+if pais_usuario == 'Japão':
+    lista_navios = ['torpedeiro', 'torpedeiro', 'cruzador', 'destroyer', 'destroyer', 'couracado', 'submarino']
+
+# Cria os mapas
+matriz_comp = cria_mapa(10)
+matriz_user = cria_mapa(10)
+
+print(f'COMPUTADOR - {pais_computador}')
+print()
+mapa_comp = f(matriz_comp)
+print()
+
+print(f'JOGADOR - {pais_usuario}')
+print()
+mapa_user = f(matriz_user)
+print()
+
 
 navio_pendente = lista_navios[0]
 
 for i in range (len(lista_navios)):
     navio_pendente = lista_navios[i]
     print(f'Alocar: {navio_pendente} ({CONFIGURACAO[navio_pendente]} blocos)')
-    print(f'Próximos: {lista_navios[i+1:-1]}')
+    print(f'Próximos: {lista_navios[i+1:]}')
     print()
-    letra = input('Informe a Letra: ')
-    if letra not in letras_validas:
-        print('Letra inválida')
+    letra = None
+    while True:
         letra = input('Informe a Letra: ')
-   
+        if letra == "":
+            print('Letra inválida')
+        elif letra not in letras_validas:
+            print('Letra inválida')
+        else:
+            break
