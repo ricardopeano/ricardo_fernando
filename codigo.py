@@ -15,13 +15,13 @@ def f(mapa): #Funcao para formatar o mata final, com cores
                 lista[l][c] = (u"\u001b[30m   \u001b[0m")
     print('   A   B   C   D   E   F   G   H   I   J')
     for i in range (10):
-        print(i+1, lista[i][0], lista[i][1], lista[i][2], lista[i][3], lista[i][4], lista[i][5], lista[i][6], lista[i][7], lista[i][8], lista[i][9], i+1)
+        print(i, lista[i][0], lista[i][1], lista[i][2], lista[i][3], lista[i][4], lista[i][5], lista[i][6], lista[i][7], lista[i][8], lista[i][9], i)
     print('   A   B   C   D   E   F   G   H   I   J')
     return ''
 
 def posicao_suporta(mapa, b, l, c, o):
     if o == 'h':
-        if c + b > len(mapa):
+        if c + b > len(mapa[0]):
             return False
         for i in range(b):
             if mapa[l][c+i] != ' ':
@@ -44,7 +44,7 @@ def colocando_noMapa(mapa, b, l, c, o):
             mapa[l][i] = 'N'
     return mapa
 
-def aloca_navios(mapa, lista):
+def aloca_naviosComp(mapa, lista):
     tam = len(mapa)
     l = random.randint(0, tam-1)
     c = random.randint(0, tam-1)
@@ -61,14 +61,12 @@ def aloca_navios(mapa, lista):
     return mapa_final_comp
 
 def aloca_naviosUser(mapa, b, l, c, o):
-    import random
-    tam = len(mapa)
-    if posicao_suporta(mapa, b, l, c, o) == True:
+    if posicao_suporta(mapa, b, l, c, o):
         if o == 'h':
-            for i in range (c, c+b):
+            for i in range(c, c + b):
                 mapa[l][i] = 'N'
-        if o == 'v':
-            for i in range (l, l+b):
+        elif o == 'v':
+            for i in range(l, l + b):
                 mapa[i][c] = 'N'
     return mapa
 
@@ -190,6 +188,17 @@ print()
 navio_pendente = lista_navios[0]
 
 for i in range (len(lista_navios)):
+
+    print(f'COMPUTADOR - {pais_computador}')
+    print()
+    mapa_comp = f(matriz_comp)
+    print()
+
+    print(f'JOGADOR - {pais_usuario}')
+    print()
+    mapa_user = f(matriz_user)
+    print()
+
     navio_pendente = lista_navios[i]
     print(f'Alocar: {navio_pendente} ({CONFIGURACAO[navio_pendente]} blocos)')
     print(f'Próximos: {lista_navios[i+1:]}')
@@ -203,3 +212,41 @@ for i in range (len(lista_navios)):
             print('Letra inválida')
         else:
             break
+    if letra in 'Aa':
+        coluna = 0
+    elif letra in 'Bb':
+        coluna = 1
+    elif letra in 'Cc':
+        coluna = 2
+    elif letra in 'Dd':
+        coluna = 3
+    elif letra in 'Ee':
+        coluna = 4
+    elif letra in 'Ff':
+        coluna = 5
+    elif letra in 'Gg':
+        coluna = 6
+    elif letra in 'Hh':
+        coluna = 7
+    elif letra in 'Ii':
+        coluna = 8
+    elif letra in 'Jj':
+        coluna = 9
+
+    lista_linhas = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    linha = int(input('Informe a Linha: '))
+    while linha not in lista_linhas:
+        print('Linha inválida')
+        linha = int(input('Informe a Linha: '))
+        if linha in lista_linhas:
+            break
+
+    ori_possiveis = 'vhVH'
+    ori = input('Informe a Orientação [v|h]: ')
+    while ori not in ori_possiveis:
+        print('Orientação inválida')
+        ori = input('Informe a Orientação [v|h]: ')
+        if ori in ori_possiveis:
+            break
+
+    mapa_user = colocando_noMapa(matriz_user, CONFIGURACAO[navio_pendente], linha, coluna, ori)
