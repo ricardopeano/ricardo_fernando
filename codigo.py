@@ -16,9 +16,9 @@ def f(mapa): #Funcao para formatar o mata final, com cores
                 # lista[l][c] = (u"\u001b[42m ∎ \u001b[0m")
                 lista[l][c] = '\033[92m∎\033[0m'
             if letra == 'X':
-                lista[l][c] = (u"\u001b[91m \u001b[0m")
+                lista[l][c] = (u"\u001b[91m∎\u001b[0m")
             if letra == 'A':
-                lista[l][c] = (u"\u001b[34m \u001b[0m")
+                lista[l][c] = (u"\u001b[34m∎\u001b[0m")
             if letra == ' ':
                 lista[l][c] = (u"\u001b[30m \u001b[0m")
     print('  A B C D E F G H I J')
@@ -386,7 +386,7 @@ if pais_computador == 'Japão':
 
 mapa_comp_alocado = aloca_naviosComp(matriz_comp, lista_b)
  
-while True:
+while foi_derrotado(mapa_comp_alocado) == False and foi_derrotado(matriz_user) == False:
 
     mc = copy.deepcopy(mapa_comp_alocado)
     for i in range(len(mc)):
@@ -448,12 +448,12 @@ while True:
 
     tiro_user = mapa_comp_alocado[linha][coluna]
     if tiro_user == 'N':
-        tiro_user = 'X'
+        mapa_comp_alocado[linha][coluna] = 'X'
         print()
         print(f'Jogador --> {cord}   BOOM!')
         print()
     elif tiro_user == ' ':
-        tiro_user = 'A'
+        mapa_comp_alocado[linha][coluna] = 'A'
         print()
         print(f'Jogador --> {cord}   Água!')
         print()
@@ -486,10 +486,22 @@ while True:
     cord_comp = letra_comp + str(linha_comp)
 
     if tiro_comp == 'N':
-        tiro_comp = 'X'
+        matriz_user[linha_comp][coluna_comp] = 'X'
         print(f'Computador --> {cord_comp}   BOOM!')
         print()
     elif tiro_comp == ' ':
-        tiro_comp = 'A'
+        matriz_user[linha_comp][coluna_comp] = 'A'
         print(f'Computador --> {cord_comp}   Água!')
         print()
+
+    if foi_derrotado(mapa_comp_alocado) == True:
+        print()
+        print('O jogo encerrou. O computador foi derrotado! ')
+        print()
+        break
+
+    if foi_derrotado(matriz_user) == True:
+        print()
+        print('O jogo encerrou. O jogador foi derrotado! ')
+        print()
+        break
